@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>food recommender</title>
+    </head>
+    <body>
+        <h1>CHOOSE WHAT YOU EAT!</h1>
+        <input id="in" type="text" placeholder="enter the ingredients(with no space,only ',') to show the matching foods">
+        <button onclick="searchMeals">SUBMIT</button>
+        <script>
+            async function searchMeals() {
+    let ingredients = document.getElementById("in").value.trim();
+    if (!ingredients) {
+        alert("Please enter ingredients!");
+        return;
+    }
+    let apiUrl = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(ingredients)}`;
+    try {
+        let response = await fetch(apiUrl);
+        let data = await response.json();
+        if (data.meals) {
+            console.log("Meals found:", data.meals);
+        } else {
+            console.log("No meals found with that ingredient.");
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+</script>
+    </body>
+</html>
